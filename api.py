@@ -30,13 +30,12 @@ def classify_building_image():
     # Preprocess the image data as needed
     image = Image.open(data).convert('RGB')
     image = image.resize((150, 150))
-    img_array = np.expand_dims(np.array(image) / 255.0, axis=0).tolist()
+    img_array = np.expand_dims(np.array(image) / 255.0, axis=0)
     
     # Run the model on the image and return the prediction
     predicted_class = np.argmax(model.predict(img_array)[0])
     predicted_label = ['damage', 'no_damage'][predicted_class]
     return { 'prediction': predicted_label }
-    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
