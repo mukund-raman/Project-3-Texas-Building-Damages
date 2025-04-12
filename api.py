@@ -4,13 +4,13 @@ from PIL import Image
 import numpy as np
 
 app = Flask(__name__)
-model = tf.keras.models.load_model('lenet5_model.keras')
+model = tf.keras.models.load_model('vgg_16_model.keras')
 
 @app.route('/summary', methods=['GET'])
 def model_info():
     return {
         'name': 'Texas Building Damage Classification',
-        'model_architecture': 'LeNet-5',
+        'model_architecture': 'VGG-16',
         'version': 'v1',
         'description': 'Classify images of buildings as damaged or ' + \
             'not damaged.',
