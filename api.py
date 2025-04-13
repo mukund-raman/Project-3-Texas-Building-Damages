@@ -27,8 +27,9 @@ def classify_building_image():
     image = image.resize((150, 150))
     img_array = np.expand_dims(np.array(image) / 255.0, axis=0)
 
-    prediction = model.predict(img_array)[0][0]  # for sigmoid output
-    predicted_label = 'damage' if prediction >= 0.5 else 'no_damage'
+    prediction = model.predict(img_array)[0][0]
+    predicted_label = 'no_damage' if prediction >= 0.5 else 'damage'
+
 
     return { 'prediction': predicted_label, 'confidence': float(prediction) }
 
