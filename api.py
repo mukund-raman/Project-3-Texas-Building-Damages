@@ -19,23 +19,19 @@ def model_info():
 
 @app.route('/inference', methods=['POST'])
 def classify_building_image():
-    # Check if the post request has the file part
     if 'image' not in request.files:
-      # If the user did not pass the image under `image`, return an error.
-      return '{"error": "Invalid request; pass a binary image file as a \
-              multi-part form under the image key."}'
-    # Get the data
+        return '{"error": "Invalid request; pass a binary image file as a multi-part form under the image key."}'
+
     data = request.files['image']
-    
-    # Preprocess the image data as needed
     image = Image.open(data).convert('RGB')
     image = image.resize((150, 150))
     img_array = np.expand_dims(np.array(image) / 255.0, axis=0)
-    
-    # Run the model on the image and return the prediction
-    predicted_class = np.argmax(model.predict(img_array)[0])
-    predicted_label = ['damage', 'no_damage'][predicted_class]
-    return { 'prediction': predicted_label }
+
+    prediction = model.predict(img_array)[0][0]  # for sigmoid output
+    predicted_label = 'damage' if prediction >= 0.5 else 'no_damage'
+
+    return { 'prediction': predicted_label, 'confidence': float(prediction) }
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
