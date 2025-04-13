@@ -7,12 +7,12 @@ This project provides an inference API server for classifying building images.
 - Docker installed on your machine
 - Docker Compose installed
 
-## Build the Docker Container Image
+## Retrieve the Docker Container Image
 
-Use the following command to build the docker image:
+Use the following command to retrieve the docker image stored in DockerHub:
 
 ```bash
-docker build -t mkr2497/texas-building-damages:latest .
+docker pull mkr2497/texas-building-damages:latest
 ```
 
 ## Running the Container with Docker Compose
